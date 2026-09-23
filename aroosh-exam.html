@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>TomTom Mathe - Exam Vorbereitung 🚀</title>
+    
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: linear-gradient(135deg, #f5fbff, #f7f4ff);
+            padding: 18px;
+            color: #263238;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: 0 auto;
+        }
+
+        .top {
+            text-align: center;
+            padding: 25px 10px 20px;
+        }
+
+        .rocket {
+            font-size: 55px;
+            margin-bottom: 8px;
+        }
+
+        .top h1 {
+            color: #173f73;
+            font-size: clamp(28px, 6vw, 45px);
+            font-weight: 900;
+        }
+
+        .exam-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #facc15, #f59e0b);
+            color: #422006;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 800;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 17px;
+            border-radius: 25px;
+            background: white;
+            border: 2px solid #dbeafe;
+            color: #173f73;
+            text-decoration: none;
+            font-weight: 700;
+            transition: 0.2s;
+        }
+
+        .back-button:hover {
+            background: #173f73;
+            color: white;
+        }
+
+        /* TOPIC NAVIGATION */
+        .topic-nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 25px 0;
+        }
+
+        .topic-btn {
+            padding: 12px 18px;
+            border: 3px solid #dbeafe;
+            background: white;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .topic-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(23,63,115,0.15);
+        }
+
+        .topic-btn.active {
+            background: #3498db;
+            color: white;
+            border-color: #3498db;
+        }
+
+        /* SECTIONS */
+        .topic-section {
+            display: none;
+            background: white;
+            border-radius: 25px;
+            padding: 30px;
+            margin-top: 25px;
+            box-shadow: 0 10px 30px rgba(40,60,80,0.08);
+        }
+
+        .topic-section.active {
+            display: block;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .section-header h2 {
+            color: #173f73;
+            font-size: 26px;
+            margin-bottom: 8px;
+        }
+
+        .section-header p {
+            color: #718096;
+        }
+
+        /* MATH EXERCISES */
+        .exercise-box {
+            background: linear-gradient(135deg, #eff8ff, #f8fbff);
+            border: 3px solid #bfdbfe;
+            border-radius: 22px;
+            padding: 28px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .question-label {
+            color: #718096;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+
+        .math-problem {
+            font-size: clamp(32px, 7vw, 50px);
+            color: #173f73;
+            font-weight: 900;
+            margin: 15px 0;
+        }
+
+        .answer-input {
+            width: 160px;
+            padding: 13px;
+            border: 3px solid #3498db;
+            border-radius: 13px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: 800;
+            outline: none;
+            margin: 10px;
+        }
+
+        .answer-input:focus {
+            box-shadow: 0 0 0 4px rgba(52,152,219,0.15);
+        }
+
+        .check-btn {
+            border: none;
+            background: #2ed573;
+            color: white;
+            padding: 14px 23px;
+            border-radius: 13px;
+            font-size: 18px;
+            font-weight: 800;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .check-btn:hover {
+            background: #26af5f;
+        }
+
+        .next-btn {
+            border: none;
+            background: #173f73;
+            color: white;
+            padding: 11px 20px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        .next-btn:disabled {
+            background: #cbd5e1;
+            cursor: not-allowed;
+        }
+
+        .feedback {
+            min-height: 32px;
+            margin-top: 18px;
+            font-weight: 800;
+            font-size: 17px;
+        }
+
+        .feedback.correct {
+            color: #2ed573;
+        }
+
+        .feedback.wrong {
+            color: #ef4444;
+        }
+
+        /* COMPARISON EXERCISES */
+        .comparison-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .number-box {
+            background: white;
+            border: 3px solid #3498db;
+            border-radius: 15px;
+            padding: 20px 30px;
+            font-size: 36px;
+            font-weight: 900;
+            color: #173f73;
+        }
+
+        .comparison-signs {
+            display: flex;
+            gap: 10px;
+        }
+
+        .sign-btn {
+            width: 60px;
+            height: 60px;
+            border: 3px solid #f59e0b;
+            background: #fffbeb;
+            border-radius: 12px;
+            font-size: 28px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .sign-btn:hover {
+            background: #f59e0b;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* CUBE BUILDINGS */
+        .cube-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+
+        .cube {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            border: 2px solid #1a5276;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            color: white;
+            font-size: 12px;
+        }
+
+        .cube.empty {
+            background: transparent;
+            border: 2px dashed #cbd5e1;
+        }
+
+        /* WORD PROBLEMS */
+        .word-problem {
+            background: #fffbeb;
+            border-left: 5px solid #f59e0b;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        .word-problem p {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #422006;
+            margin-bottom: 15px;
+        }
+
+        /* EXAMPLES LIST & VISUAL METHOD */
+        .examples-list-box {
+            background: white;
+            border: 2px dashed #cbd5e1;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .examples-list-box h3 {
+            color: #173f73;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .examples-list-box ul {
+            padding-left: 20px;
+        }
+
+        .examples-list-box li {
+            margin: 6px 0;
+            font-size: 16px;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .visual-method-box {
+            background: linear-gradient(135deg, #e0f2fe, #f0fdf4);
+            border: 2px solid #38bdf8;
+            border-radius: 18px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .visual-method-box h4 {
+            color: #0369a1;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .method-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .method-step-card {
+            background: white;
+            padding: 12px 15px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-left: 4px solid #0ea5e9;
+        }
+
+        .method-step-card strong {
+            color: #0369a1;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        /* PROGRESS */
+        .progress-bar {
+            background: #e2e8f0;
+            border-radius: 10px;
+            height: 25px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #3498db, #2ed573);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 800;
+            font-size: 14px;
+        }
+
+        .score-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .score-card {
+            background: white;
+            border-radius: 17px;
+            padding: 14px 22px;
+            text-align: center;
+            box-shadow: 0 7px 20px rgba(40,60,80,0.07);
+            border: 2px solid #e5edf5;
+        }
+
+        .score-card .number {
+            display: block;
+            color: #173f73;
+            font-size: 26px;
+            font-weight: 900;
+        }
+
+        .score-card .label {
+            display: block;
+            color: #7b8794;
+            font-size: 13px;
+            margin-top: 3px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header class="top">
+        <div class="rocket">🚀</div>
+        <h1>TomToms Exam Vorbereitung</h1>
+        <div class="exam-badge">Mathetest - Wiederholung Klasse 1</div>
+        <a href="aroosh.html" class="back-button">← Zurück zur Lernwelt</a>
+    </header>
+
+    <nav class="topic-nav">
+        <button class="topic-btn active" onclick="showTopic('rechnen')">🔢 Rechnen bis 20</button>
+        <button class="topic-btn" onclick="showTopic('vergleichen')">⚖️ Zahlen vergleichen</button>
+        <button class="topic-btn" onclick="showTopic('tabellen')">📊 Tabellen & Mauern</button>
+        <button class="topic-btn" onclick="showTopic('wuerfel')">🎲 Würfelbauten</button>
+        <button class="topic-btn" onclick="showTopic('sachaufgaben')">📖 Sachaufgaben</button>
+    </nav>
+
+    <div class="score-grid">
+        <div class="score-card">
+            <span class="number" id="total-correct">0</span>
+            <span class="label">Richtige Antworten</span>
+        </div>
+        <div class="score-card">
+            <span class="number" id="total-wrong">0</span>
+            <span class="label">Noch zu üben</span>
+        </div>
+        <div class="score-card">
+            <span class="number" id="current-streak">0 🔥</span>
+            <span class="label">Serie</span>
+        </div>
+    </div>
+
+    <div class="progress-bar">
+        <div class="progress-fill" id="progress-bar">0% geschafft!</div>
+    </div>
+
+    <!-- TOPIC 1: RECHNEN BIS 20 -->
+    <section id="rechnen" class="topic-section active">
+        <div class="section-header">
+            <h2>🔢 Rechnen bis 20</h2>
+            <p>Plus und Minus im Zahlenraum bis 20</p>
+        </div>
+
+        <div class="visual-method-box">
+            <h4>💡 Visuelle Lernmethode: Der Zehnerstufen-Trick</h4>
+            <div class="method-steps">
+                <div class="method-step-card">
+                    <strong>Schritt 1</strong>
+                    Zerlege die Zahl so, dass du zuerst bis zur 10 rechnest.
+                </div>
+                <div class="method-step-card">
+                    <strong>Schritt 2</strong>
+                    Addiere oder subtrahiere den verbleibenden Rest.
+                </div>
+                <div class="method-step-card">
+                    <strong>Beispielbild</strong>
+                    7 + 5 &rarr; (7 + 3) + 2 = 10 + 2 = 12
+                </div>
+            </div>
+        </div>
+
+        <div class="exercise-box">
+            <div class="question-label">Aufgabe:</div>
+            <div class="math-problem" id="rechnen-problem">8 + 7 = ?</div>
+            <input type="number" class="answer-input" id="rechnen-answer" placeholder="?" oninput="checkInputState('rechnen-answer', 'rechnen-next')">
+            <br>
+            <button class="check-btn" onclick="checkRechnen()">Prüfen ✓</button>
+            <button class="next-btn" id="rechnen-next" onclick="nextRechnen()" disabled>Nächste Aufgabe →</button>
+            <div class="feedback" id="rechnen-feedback"></div>
+        </div>
+
+        <div class="examples-list-box">
+            <h3>📋 5 Prüfungs-Beispiele:</h3>
+            <ul>
+                <li>1) 7 + 5 = 12</li>
+                <li>2) 14 - 6 = 8</li>
+                <li>3) 9 + 8 = 17</li>
+                <li>4) 19 - 5 = 14</li>
+                <li>5) 6 + 7 = 13</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- TOPIC 2: ZAHLEN VERGLEICHEN -->
+    <section id="vergleichen" class="topic-section">
+        <div class="section-header">
+            <h2>⚖️ Zahlen vergleichen</h2>
+            <p>Welche Zahl ist größer? &lt; &gt; oder =?</p>
+        </div>
+
+        <div class="visual-method-box">
+            <h4>🐊 Visuelle Lernmethode: Das Krokodil-Maul</h4>
+            <div class="method-steps">
+                <div class="method-step-card">
+                    <strong>Die Regel</strong>
+                    Das offene Maul des Krokodils zeigt immer hungrig zur größeren Zahl!
+                </div>
+                <div class="method-step-card">
+                    <strong>Symbole</strong>
+                    &gt; (größer als), &lt; (kleiner als), = (gleich groß)
+                </div>
+                <div class="method-step-card">
+                    <strong>Beispielbild</strong>
+                    15 &gt; 12
+                </div>
+            </div>
+        </div>
+
+        <div class="exercise-box">
+            <div class="question-label">Welches Zeichen passt?</div>
+            <div class="comparison-row">
+                <div class="number-box" id="verg-num1">12</div>
+                <div class="comparison-signs">
+                    <button class="sign-btn" onclick="checkVergleichen('>')">&gt;</button>
+                    <button class="sign-btn" onclick="checkVergleichen('&lt;')">&lt;</button>
+                    <button class="sign-btn" onclick="checkVergleichen('=')">=</button>
+                </div>
+                <div class="number-box" id="verg-num2">8</div>
+            </div>
+            <div class="feedback" id="vergleichen-feedback"></div>
+            <button class="next-btn" id="verg-next" onclick="nextVergleichen()" disabled>Nächste Aufgabe →</button>
+        </div>
+
+        <div class="examples-list-box">
+            <h3>📋 5 Prüfungs-Beispiele:</h3>
+            <ul>
+                <li>1) 12 &lt; 15</li>
+                <li>2) 18 = 18</li>
+                <li>3) 20 &gt; 14</li>
+                <li>4) 11 &lt; 16</li>
+                <li>5) 17 &gt; 9</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- TOPIC 3: TABELLEN & RECHENMAUERN -->
+    <section id="tabellen" class="topic-section">
+        <div class="section-header">
+            <h2>📊 Tabellen, Aufgabenfamilien & Rechenmauern</h2>
+            <p>Tauschaufgaben, Umkehraufgaben und Mauern bauen</p>
+        </div>
+
+        <div class="visual-method-box">
+            <h4>🧱 Visuelle Lernmethode: Das Stein-auf-Stein Prinzip</h4>
+            <div class="method-steps">
+                <div class="method-step-card">
+                    <strong>Rechenmauern</strong>
+                    Zwei Steine unten zusammengezählt ergeben den Stein direkt darüber (+).
+                </div>
+                <div class="method-step-card">
+                    <strong>Aufgabenfamilien</strong>
+                    Nutze immer dieselben 3 Zahlen für Tausch- und Minusaufgaben.
+                </div>
+                <div class="method-step-card">
+                    <strong>Beispielbild</strong>
+                    Unten [4] und [3] ergibt oben [7].
+                </div>
+            </div>
+        </div>
+
+        <div class="exercise-box">
+            <div class="question-label">Finde die Tauschaufgabe:</div>
+            <div class="math-problem" id="tausch-aufgabe">7 + 4 = 11</div>
+            <p style="margin: 15px 0; color: #718096;">Was ist die Tauschaufgabe?</p>
+            <input type="text" class="answer-input" id="tausch-answer" placeholder="z.B. 4+7" style="width: 200px;" oninput="checkInputState('tausch-answer', 'tausch-next')">
+            <br>
+            <button class="check-btn" onclick="checkTausch()">Prüfen ✓</button>
+            <button class="next-btn" id="tausch-next" onclick="nextTausch()" disabled>Nächste →</button>
+            <div class="feedback" id="tausch-feedback"></div>
+        </div>
+
+        <div class="examples-list-box">
+            <h3>📋 5 Prüfungs-Beispiele:</h3>
+            <ul>
+                <li>1) Tabelle (+3): 4, 7, 10</li>
+                <li>2) Aufgabenrolle: 5 &rarr; +4 &rarr; 9 &rarr; -2 &rarr; 7</li>
+                <li>3) Aufgabenfamilie (3, 7, 10): 3+7=10, 7+3=10, 10-3=7, 10-7=3</li>
+                <li>4) Rechenmauer Basis: Unten [4] und [3] &rarr; Oben [7]</li>
+                <li>5) Rechenmauer fehlender Stein: Oben [12], Unten Links [5] &rarr; Unten Rechts [7]</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- TOPIC 4: WÜRFELBAUTEN -->
+    <section id="wuerfel" class="topic-section">
+        <div class="section-header">
+            <h2>🎲 Würfelbauten</h2>
+            <p>Wie viele Würfel siehst du?</p>
+        </div>
+
+        <div class="visual-method-box">
+            <h4>📦 Visuelle Lernmethode: Systematisches Zählen</h4>
+            <div class="method-steps">
+                <div class="method-step-card">
+                    <strong>Ebene für Ebene</strong>
+                    Zähle immer erst die unterste Schicht, dann die oberen Blöcke.
+                </div>
+                <div class="method-step-card">
+                    <strong>Versteckte Würfel</strong>
+                    Vergiss nicht: Jedes Gebäude braucht ein stabiles Fundament unten!
+                </div>
+            </div>
+        </div>
+
+        <div class="exercise-box">
+            <div class="question-label">Wie viele Würfel sind es?</div>
+            <div class="cube-container" id="wuerfel-container"></div>
+            <input type="number" class="answer-input" id="wuerfel-answer" placeholder="?" oninput="checkInputState('wuerfel-answer', 'wuerfel-next')">
+            <br>
+            <button class="check-btn" onclick="checkWuerfel()">Prüfen ✓</button>
+            <button class="next-btn" id="wuerfel-next" onclick="nextWuerfel()" disabled>Nächster Bau →</button>
+            <div class="feedback" id="wuerfel-feedback"></div>
+        </div>
+
+        <div class="examples-list-box">
+            <h3>📋 5 Prüfungs-Beispiele:</h3>
+            <ul>
+                <li>1) Sichtbarer 3er-Stack (Gesamt: 3 Würfel)</li>
+                <li>2) Symmetrischer Grundriss 2x2 (Gesamt: 4 Würfel)</li>
+                <li>3) Turm der Höhe 3 mit Anbau (Gesamt: 4 Würfel)</li>
+                <li>4) Stepp-Treppe Stufen 1, 2, 3 (Gesamt: 6 Würfel)</li>
+                <li>5) Großes Rastergebäude mit 9 Grundwürfeln</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- TOPIC 5: SACHAUFGABEN -->
+    <section id="sachaufgaben" class="topic-section">
+        <div class="section-header">
+            <h2>📖 Sachaufgaben</h2>
+            <p>Lies genau und rechne!</p>
+        </div>
+
+        <div class="visual-method-box">
+            <h4>🧠 Visuelle Lernmethode: Der 4-Schritte Plan</h4>
+            <div class="method-steps">
+                <div class="method-step-card">
+                    <strong>1. Text lesen</strong>
+                    Unterstreiche alle wichtigen Zahlen.
+                </div>
+                <div class="method-step-card">
+                    <strong>2. Erkennen</strong>
+                    Kommen Sachen dazu (+) oder werden sie weniger (-)?
+                </div>
+            </div>
+        </div>
+
+        <div class="exercise-box">
+            <div class="word-problem" id="sach-problem">
+                <p>TomTom hat 8 Murmeln. Im Garten findet er noch 5 Murmeln. Wie viele Murmeln hat er jetzt?</p>
+            </div>
+            <input type="number" class="answer-input" id="sach-answer" placeholder="?" oninput="checkInputState('sach-answer', 'sach-next')">
+            <br>
+            <button class="check-btn" onclick="checkSach()">Prüfen ✓</button>
+            <button class="next-btn" id="sach-next" onclick="nextSach()" disabled>Nächste Aufgabe →</button>
+            <div class="feedback" id="sach-feedback"></div>
+        </div>
+
+        <div class="examples-list-box">
+            <h3>📋 5 Prüfungs-Beispiele:</h3>
+            <ul>
+                <li>1) Anna hat 8 Sticker und bekommt 5 dazu (8 + 5 = 13)</li>
+                <li>2) Tom hatte 14 Murmeln und verliert 4 (14 - 4 = 10)</li>
+                <li>3) Lisa backt 7 Muffins am Sa und 6 am So (7 + 6 = 13)</li>
+                <li>4) 17 Kinder auf Spielplatz, 5 gehen rein (17 - 5 = 12)</li>
+                <li>5) Max hat 9 rote und 8 blaue Autos (9 + 8 = 17)</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer style="text-align: center; padding: 40px 10px 20px; color: #8795a1; font-size: 14px;">
+        <p>🚀 <strong>TomTom</strong>, du wirst das großartig machen!</p>
+        <p style="margin-top: 8px;">Mama Tabassum & Papa Farhad ❤️</p>
+    </footer>
+
+</div>
+
+<script>
+let totalCorrect = 0;
+let totalWrong = 0;
+let currentStreak = 0;
+let totalAttempts = 0;
+
+let currentRechnen = {};
+let currentVergleichen = {};
+let currentTausch = {};
+let currentWuerfel = {};
+let currentSach = {};
+
+function showTopic(topicName) {
+    document.querySelectorAll('.topic-section').forEach(section => {
+        section.classList.remove('active');
+    });
+    document.querySelectorAll('.topic-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    document.getElementById(topicName).classList.add('active');
+    event.target.classList.add('active');
+}
+
+function updateProgress() {
+    document.getElementById('total-correct').textContent = totalCorrect;
+    document.getElementById('total-wrong').textContent = totalWrong;
+    document.getElementById('current-streak').textContent = currentStreak + ' 🔥';
+    
+    if (totalAttempts > 0) {
+        const percentage = Math.round((totalCorrect / totalAttempts) * 100);
+        document.getElementById('progress-bar').style.width = percentage + '%';
+        document.getElementById('progress-bar').textContent = percentage + '% geschafft!';
+    }
+}
+
+// Enable/Disable next button based on input
+function checkInputState(inputId, nextBtnId) {
+    const inputVal = document.getElementById(inputId).value.trim();
+    const nextBtn = document.getElementById(nextBtnId);
+    if (inputVal !== "") {
+        nextBtn.removeAttribute('disabled');
+    } else {
+        nextBtn.setAttribute('disabled', 'true');
+    }
+}
+
+// TOPIC 1
+function generateRechnen() {
+    const operations = ['+', '-'];
+    const op = operations[Math.floor(Math.random() * operations.length)];
+    let a, b, answer;
+    if (op === '+') {
+        a = Math.floor(Math.random() * 15) + 1;
+        b = Math.floor(Math.random() * (20 - a)) + 1;
+        answer = a + b;
+    } else {
+        a = Math.floor(Math.random() * 19) + 2;
+        b = Math.floor(Math.random() * (a - 1)) + 1;
+        answer = a - b;
+    }
+    currentRechnen = { a, b, op, answer };
+    document.getElementById('rechnen-problem').textContent = `${a} ${op} ${b} = ?`;
+    document.getElementById('rechnen-answer').value = '';
+    document.getElementById('rechnen-feedback').textContent = '';
+    document.getElementById('rechnen-next').setAttribute('disabled', 'true');
+}
+
+function checkRechnen() {
+    const userAnswer = parseInt(document.getElementById('rechnen-answer').value);
+    const feedback = document.getElementById('rechnen-feedback');
+    if (userAnswer === currentRechnen.answer) {
+        feedback.textContent = '✅ Richtig! Super gemacht, TomTom! 🌟';
+        feedback.className = 'feedback correct';
+        totalCorrect++;
+        currentStreak++;
+    } else {
+        feedback.textContent = `❌ Fast! Die richtige Antwort ist ${currentRechnen.answer}.`;
+        feedback.className = 'feedback wrong';
+        totalWrong++;
+        currentStreak = 0;
+    }
+    totalAttempts++;
+    document.getElementById('rechnen-next').removeAttribute('disabled');
+    updateProgress();
+}
+function nextRechnen() { generateRechnen(); }
+
+// TOPIC 2
+function generateVergleichen() {
+    const num1 = Math.floor(Math.random() * 19) + 1;
+    let num2 = Math.floor(Math.random() * 19) + 1;
+    while (num1 === num2) { num2 = Math.floor(Math.random() * 19) + 1; }
+    let correctSign = num1 > num2 ? '>' : (num1 < num2 ? '<' : '=');
+    currentVergleichen = { num1, num2, correctSign };
+    document.getElementById('verg-num1').textContent = num1;
+    document.getElementById('verg-num2').textContent = num2;
+    document.getElementById('vergleichen-feedback').textContent = '';
+    document.getElementById('verg-next').setAttribute('disabled', 'true');
+}
+
+function checkVergleichen(sign) {
+    const feedback = document.getElementById('vergleichen-feedback');
+    if (sign === currentVergleichen.correctSign) {
+        feedback.textContent = '✅ Perfekt! Das Krokodil frisst die größere Zahl! 🐊';
+        feedback.className = 'feedback correct';
+        totalCorrect++;
+        currentStreak++;
+    } else {
+        feedback.textContent = `❌ Nicht ganz! Denk ans Krokodil! 🐊`;
+        feedback.className = 'feedback wrong';
+        totalWrong++;
+        currentStreak = 0;
+    }
+    totalAttempts++;
+    document.getElementById('verg-next').removeAttribute('disabled');
+    updateProgress();
+}
+function nextVergleichen() { generateVergleichen(); }
+
+// TOPIC 3
+function generateTausch() {
+    const a = Math.floor(Math.random() * 10) + 1;
+    const b = Math.floor(Math.random() * 10) + 1;
+    const sum = a + b;
+    currentTausch = { a, b, sum, tauschaufgabe: `${b}+${a}` };
+    document.getElementById('tausch-aufgabe').textContent = `${a} + ${b} = ${sum}`;
+    document.getElementById('tausch-answer').value = '';
+    document.getElementById('tausch-feedback').textContent = '';
+    document.getElementById('tausch-next').setAttribute('disabled', 'true');
+}
+
+function checkTausch() {
+    const userAnswer = document.getElementById('tausch-answer').value.replace(/\s/g, '');
+    const feedback = document.getElementById('tausch-feedback');
+    if (userAnswer === currentTausch.tauschaufgabe || userAnswer === `${currentTausch.b}+${currentTausch.a}=${currentTausch.sum}`) {
+        feedback.textContent = '✅ Genau! Tauschaufgaben haben das gleiche Ergebnis! 🎯';
+        feedback.className = 'feedback correct';
+        totalCorrect++;
+        currentStreak++;
+    } else {
+        feedback.textContent = `❌ Die Tauschaufgabe ist: ${currentTausch.tauschaufgabe} = ${currentTausch.sum}`;
+        feedback.className = 'feedback wrong';
+        totalWrong++;
+        currentStreak = 0;
+    }
+    totalAttempts++;
+    document.getElementById('tausch-next').removeAttribute('disabled');
+    updateProgress();
+}
+function nextTausch() { generateTausch(); }
+
+// TOPIC 4
+function generateWuerfel() {
+    const patterns = [
+        { cubes: 5, layout: [[1,1,1],[1,1,0]] },
+        { cubes: 7, layout: [[1,1,1],[1,1,1],[1,0,0]] },
+        { cubes: 6, layout: [[1,1,1],[1,1,1]] },
+        { cubes: 4, layout: [[1,1],[1,1]] },
+        { cubes: 9, layout: [[1,1,1],[1,1,1],[1,1,1]] }
+    ];
+    const pattern = patterns[Math.floor(Math.random() * patterns.length)];
+    currentWuerfel = { answer: pattern.cubes };
+    const container = document.getElementById('wuerfel-container');
+    container.innerHTML = '';
+    pattern.layout.forEach(row => {
+        row.forEach(cell => {
+            const cube = document.createElement('div');
+            cube.className = cell === 1 ? 'cube' : 'cube empty';
+            if (cell === 1) cube.textContent = '📦';
+            container.appendChild(cube);
+        });
+    });
+    document.getElementById('wuerfel-answer').value = '';
+    document.getElementById('wuerfel-feedback').textContent = '';
+    document.getElementById('wuerfel-next').setAttribute('disabled', 'true');
+}
+
+function checkWuerfel() {
+    const userAnswer = parseInt(document.getElementById('wuerfel-answer').value);
+    const feedback = document.getElementById('wuerfel-feedback');
+    if (userAnswer === currentWuerfel.answer) {
+        feedback.textContent = '✅ Richtig gezählt! Du siehst jeden Würfel!';
+        feedback.className = 'feedback correct';
+        totalCorrect++;
+        currentStreak++;
+    } else {
+        feedback.textContent = `❌ Es sind ${currentWuerfel.answer} Würfel. Zähle nochmal! 🔍`;
+        feedback.className = 'feedback wrong';
+        totalWrong++;
+        currentStreak = 0;
+    }
+    totalAttempts++;
+    document.getElementById('wuerfel-next').removeAttribute('disabled');
+    updateProgress();
+}
+function nextWuerfel() { generateWuerfel(); }
+
+// TOPIC 5
+function generateSach() {
+    const problems = [
+        { text: "TomTom hat 8 Murmeln. Im Garten findet er noch 5 Murmeln. Wie viele Murmeln hat er jetzt?", answer: 13 },
+        { text: "Laddu hat 15 Bonbons. Er gibt 6 an seinen Bruder. Wie viele hat er noch?", answer: 9 },
+        { text: "In einem Korb sind 7 Äpfel. Mama legt noch 8 dazu. Wie viele sind es jetzt?", answer: 15 },
+        { text: "TomTom hat 20 Euro. Er kauft ein Spielzeug für 12 Euro. Wie viel Geld hat er noch?", answer: 8 },
+        { text: "In der Klasse sind 11 Mädchen und 9 Jungen. Wie viele Kinder sind es insgesamt?", answer: 20 }
+    ];
+    currentSach = problems[Math.floor(Math.random() * problems.length)];
+    document.querySelector('#sach-problem p').textContent = currentSach.text;
+    document.getElementById('sach-answer').value = '';
+    document.getElementById('sach-feedback').textContent = '';
+    document.getElementById('sach-next').setAttribute('disabled', 'true');
+}
+
+function checkSach() {
+    const userAnswer = parseInt(document.getElementById('sach-answer').value);
+    const feedback = document.getElementById('sach-feedback');
+    if (userAnswer === currentSach.answer) {
+        feedback.textContent = '✅ Super! Du kannst Sachaufgaben lösen! 🌟';
+        feedback.className = 'feedback correct';
+        totalCorrect++;
+        currentStreak++;
+    } else {
+        feedback.textContent = `❌ Die richtige Antwort ist ${currentSach.answer}. Lies nochmal genau! 📖`;
+        feedback.className = 'feedback wrong';
+        totalWrong++;
+        currentStreak = 0;
+    }
+    totalAttempts++;
+    document.getElementById('sach-next').removeAttribute('disabled');
+    updateProgress();
+}
+function nextSach() { generateSach(); }
+
+window.onload = function() {
+    generateRechnen();
+    generateVergleichen();
+    generateTausch();
+    generateWuerfel();
+    generateSach();
+};
+</script>
+
+</body>
+</html>
